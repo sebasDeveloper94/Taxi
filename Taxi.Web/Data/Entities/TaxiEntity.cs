@@ -15,5 +15,7 @@ namespace Taxi.Web.Data.Entities
         [StringLength(6, MinimumLength = 6, ErrorMessage = "The Field must have {1} characteres.")]
         [Required(ErrorMessage = "The Field {0} is mandatory.")]
         public string Plaque { get; set; }
+
+        public ICollection<TripEntity> Trips { get; set; }
     }
 }
