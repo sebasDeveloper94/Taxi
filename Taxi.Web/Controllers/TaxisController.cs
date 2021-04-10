@@ -1,18 +1,19 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using Taxi.Web.Data;
 using Taxi.Web.Data.Entities;
+using Taxi.Web.Helpers;
 
 namespace Taxi.Web.Controllers
 {
+    [Authorize(Roles = "Admin")]
     public class TaxisController : Controller
     {
         private readonly DataContext _context;
+
 
         public TaxisController(DataContext context)
         {
@@ -34,7 +35,7 @@ namespace Taxi.Web.Controllers
             }
 
             var taxiEntity = await _context.Taxis
-                .FirstOrDefaultAsync(m => m.ID == id);
+                .FirstOrDefaultAsync(m => m.Id == id);
             if (taxiEntity == null)
             {
                 return NotFound();
@@ -104,7 +105,7 @@ namespace Taxi.Web.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Edit(int id, TaxiEntity taxiEntity)
         {
-            if (id != taxiEntity.ID)
+            if (id != taxiEntity.Id)
             {
                 return NotFound();
             }
@@ -143,7 +144,7 @@ namespace Taxi.Web.Controllers
             }
 
             var taxiEntity = await _context.Taxis
-                .FirstOrDefaultAsync(m => m.ID == id);
+                .FirstOrDefaultAsync(m => m.Id == id);
             if (taxiEntity == null)
             {
                 return NotFound();
