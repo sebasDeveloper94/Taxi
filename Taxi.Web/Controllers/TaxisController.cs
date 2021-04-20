@@ -13,6 +13,7 @@ namespace Taxi.Web.Controllers
     public class TaxisController : Controller
     {
         private readonly DataContext _context;
+        private readonly IConverterHelper _converterHelper;
 
 
         public TaxisController(DataContext context)
@@ -154,6 +155,34 @@ namespace Taxi.Web.Controllers
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }
+
+        //[HttpGet("{plaque}")]
+        //public async Task<IActionResult> GetTaxiEntity([FromRoute] string plaque)
+        //{
+        //    if (!ModelState.IsValid)
+        //    {
+        //        return BadRequest(ModelState);
+        //    }
+
+        //    TaxiEntity taxiEntity = await _context.Taxis
+        //        .Include(t => t.User)
+        //        .Include(t => t.Trips)
+        //        .ThenInclude(t => t.TripDetails)
+        //        .Include(t => t.Trips)
+        //        .ThenInclude(t => t.User)
+        //        .FirstOrDefaultAsync(t => t.Plaque == plaque);
+
+        //    if (taxiEntity == null)
+        //    {
+        //        taxiEntity = new TaxiEntity() { Plaque = plaque.ToUpper() };
+        //        _context.Taxis.Add(taxiEntity);
+        //        await _context.SaveChangesAsync();
+        //    }
+
+        //    return Ok(_converterHelper.ToTaxiResponse(taxiEntity));
+        //}
+
+
 
     }
 }

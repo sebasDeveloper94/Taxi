@@ -41,10 +41,11 @@ namespace Taxi.Web.Controllers.API
                 .ThenInclude(t => t.User)
                 .FirstOrDefaultAsync(t => t.Plaque == plaque);
 
-
             if (taxiEntity == null)
             {
-                return NotFound();
+                taxiEntity = new TaxiEntity() { Plaque = plaque.ToUpper() };
+                _context.Taxis.Add(taxiEntity);
+                await _context.SaveChangesAsync();
             }
 
             return Ok(_converterHelper.ToTaxiResponse(taxiEntity));
